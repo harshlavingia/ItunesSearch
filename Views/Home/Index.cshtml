@@ -1,0 +1,58 @@
+﻿@model ItunesSearch.Models.SearchResultsModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+	<h2>Itunes Search</h2>
+	<p class="lead">This application will allow you to search music, videos from Itunes.</p>
+
+	@using (Html.BeginForm("Search", "Home", FormMethod.Get))
+	{
+		@*<b> Search Option: </b>
+		<br />*@
+		@*@Html.RadioButton("option", "Album") <text> Album&nbsp;</text>
+		@Html.RadioButton("option", "Video") <text> Video&nbsp;</text>
+		@Html.RadioButton("option", "App")<text> App&nbsp;</text>
+		<br />*@
+		<p>
+			@Html.TextBoxFor(m => m.SearchKeyword) 
+			<input type="submit" name="submit" value="Search" class="btn btn-primary btn-lg" style="padding: 5px; font-size: 18px; height: 34px; margin-left: 10px" />
+		</p>
+	}
+
+	@*@Html.TextBox("search")
+		&nbsp;&nbsp;<a href="https://asp.net" class="btn btn-primary btn-lg" style="padding: 4px; font-size: 16px; height: 30px">Search</a>*@
+</div>
+
+<div class="row">
+	<div>
+		<h3>Search Results</h3>
+		@if (Model != null)
+		{
+			<div>Searching for "@Model.SearchKeyword"</div>
+			<br/>
+			<table>
+				@foreach (var item in Model.ListSearchResult)
+				{
+					<tr>
+						<td style="padding: 5px"><img src="@item.artworkUrl100" width="290" height="372" style="max-width: 130px; max-height: 150px"/></td>
+						<td style="padding: 5px"></td>
+						@*<td style="padding: 5px"><a href="@item.artistViewUrl" target="_blank">@item.artistName</a></td>*@
+						<td style="padding: 5px">
+							<h3>@item.trackName</h3>
+							<p>@item.collectionName</p>
+							<p>@(new System.Globalization.CultureInfo("en-US", false).TextInfo.ToTitleCase(item.kind + "")) | @item.artistName</p>
+							@*<p><a href="@item.trackViewUrl" target="_blank">View More</a></p>*@
+							<p><a href="@Url.Action("Stats", "Home", item)" target="_blank">View More</a></p>
+						</td>
+					</tr>
+				}
+			</table>
+		}
+		else
+		{
+			<div>Result not found</div>
+		}
+	</div>
+</div>

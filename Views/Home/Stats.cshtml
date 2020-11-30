@@ -1,0 +1,38 @@
+﻿@model ItunesSearch.Models.StatsModel
+
+@{
+	ViewBag.Title = "Click Stats";
+}
+<h2>@ViewBag.Title</h2>
+
+<br />
+<b>@Html.ActionLink("Refresh", "ViewStats", "Home")</b>
+<br/><br/>
+
+@if (Model != null && Model.DCStats != null && Model.DCStats.Keys.Count > 0)
+{
+	<table>
+		<thead>
+			<td></td>
+			<td><b>Title</b></td>
+			<td><b>Click Count</b></td>
+		</thead>
+		@foreach (var item in Model.DCStats.Keys)
+		{
+			<tr>
+				<td style="padding: 10px 35px 10px 10px"><img src="@Model.DCStats[item].artworkUrl100" width="135" height="170" style="max-width: 70px; max-height: 90px"/></td>
+				<td style="padding: 10px 35px 10px 10px">
+					<h4>@Model.DCStats[item].trackName</h4>
+					<p>@(new System.Globalization.CultureInfo("en-US", false).TextInfo.ToTitleCase(Model.DCStats[item].kind + "")) | @Model.DCStats[item].artistName</p>
+				</td>
+				<td style="padding: 10px 35px 10px 10px; text-align: center">@Model.DCStats[item].clickCount</td>
+			</tr>
+		}
+	</table>
+}
+else
+{
+	<div>
+		<p>No search statistics are available.</p>
+	</div>
+}
