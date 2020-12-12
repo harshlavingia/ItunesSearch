@@ -17,14 +17,16 @@ namespace ItunesSearch.Controllers
 
 		public async Task<ActionResult> Search(SearchResultsModel searchResult)
 		{
-			string searchkeyword = searchResult.SearchKeyword.Trim();
-			//string baseUrl = "https://itunes.apple.com/search?{0}";
-			//string baseUrl = "https://itunes.apple.com/search?term={0}";					// temporarily changed to generic search
-			string baseUrl = "https://itunes.apple.com/search?limit=25&term={0}";           // limiting result to max 25 (To Do: pagination)
-			string apiUrl = string.Format(baseUrl, Server.UrlEncode(searchkeyword));			
+			if (!string.IsNullOrEmpty(searchResult.SearchKeyword))
+			{
+				string searchkeyword = searchResult.SearchKeyword.Trim();
+				//string baseUrl = "https://itunes.apple.com/search?{0}";
+				//string baseUrl = "https://itunes.apple.com/search?term={0}";					// temporarily changed to generic search
+				string baseUrl = "https://itunes.apple.com/search?limit=25&term={0}";           // limiting result to max 25 (To Do: pagination)
+				string apiUrl = string.Format(baseUrl, Server.UrlEncode(searchkeyword));
 
-			searchResult = await GetSearchResults(searchResult, apiUrl);			
-
+				searchResult = await GetSearchResults(searchResult, apiUrl);
+			}
 			return View("Index", searchResult);
 		}
 

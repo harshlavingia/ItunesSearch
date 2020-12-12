@@ -7,7 +7,7 @@ namespace ItunesSearch.Models
 {
 	public class SearchResultsModel
 	{
-		public string SearchKeyword { get; set; }
+		public string SearchKeyword { get; set; } = string.Empty;
 		public string RawJson { get; set; }
 
 		public List<Results> ListSearchResult { get; set; }

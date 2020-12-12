@@ -28,13 +28,14 @@
 <div class="row">
 	<div>
 		<h3>Search Results</h3>
-		@if (Model != null)
+		@if (Model != null && Model.ListSearchResult != null && Model.ListSearchResult.Count > 0)
 		{
 			<div>Searching for "@Model.SearchKeyword"</div>
 			<br/>
 			<table>
 				@foreach (var item in Model.ListSearchResult)
 				{
+					if (string.IsNullOrEmpty(item.trackViewUrl)) { continue;  }
 					<tr>
 						<td style="padding: 5px"><img src="@item.artworkUrl100" width="290" height="372" style="max-width: 130px; max-height: 150px"/></td>
 						<td style="padding: 5px"></td>
